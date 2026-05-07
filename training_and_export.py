@@ -8,13 +8,9 @@ import matplotlib.pyplot as plt
 !pip install micromlgen
 from micromlgen import port
 
-print("✅ Tất cả thư viện đã được import thành công!")
-
 df = pd.read_csv('data_log.csv', on_bad_lines='skip')
-print("✅ Đã đọc thành công file data_log.csv")
 
 # --- Tiền xử lý và làm sạch dữ liệu ---
-print(f"Số dòng đọc được từ file ban đầu: {len(df)}")
 df.columns = df.columns.str.strip()
 columns_to_process = ['HR(bpm)', 'SpO2(%)', 'HRV(ms)']
 for col in columns_to_process:
@@ -24,7 +20,7 @@ df.dropna(subset=columns_to_process, inplace=True)
 print(f"Số dòng còn lại sau khi làm sạch: {len(df)} (đã xóa {original_rows - len(df)} dòng không hợp lệ)")
 df['HR(bpm)'] = df['HR(bpm)'].astype(int)
 df['SpO2(%)'] = df['SpO2(%)'].astype(int)
-print("✅ Dữ liệu đã được làm sạch và chuẩn hóa thành công.")
+print("Dữ liệu đã được làm sạch và chuẩn hóa thành công.")
 
 def assign_stress_label_hybrid(row):
     hr = row['HR(bpm)']
@@ -76,16 +72,16 @@ print(f"Số mẫu kiểm thử (test): {len(X_test)}")
 model = RandomForestClassifier(n_estimators=30, max_depth=10, random_state=42)
 print("\nBắt đầu huấn luyện mô hình Random Forest...")
 model.fit(X_train, y_train)
-print("✅ Huấn luyện hoàn tất!")
+print("Huấn luyện hoàn tất!")
 
 #danh gia
 y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
 print(f"\n--- ĐÁNH GIÁ MÔ HÌNH ---")
-print(f"🎯 Độ chính xác tổng thể: {accuracy * 100:.2f}%")
+print(f"Độ chính xác tổng thể: {accuracy * 100:.2f}%")
 
-print("\n📊 Báo cáo chi tiết (Classification Report):")
+print("\nBáo cáo chi tiết (Classification Report):")
 
 unique_labels = np.unique(y.tolist())
 unique_labels.sort()
